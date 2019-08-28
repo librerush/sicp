@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.8
 (define (cubeRoot x)
   (cubeIter 1.0 x))

@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.12
 (define (pascal row col)
   (if (or (= col 1) (= col row))

@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.6
 
 ; infinite loop

@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 5
 
 ; chezscheme9.5 uses applicative-order evaluation

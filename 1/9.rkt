@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.9
 (define (inc x)
   (+ 1 x))

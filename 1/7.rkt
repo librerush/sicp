@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.7
 
 (define (sqrt x)

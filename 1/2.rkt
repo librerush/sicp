@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.2
 
 (define intoPrefix

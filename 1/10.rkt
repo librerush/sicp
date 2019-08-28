@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.10
 (define (A x y)
   (cond ((= y 0) 0)

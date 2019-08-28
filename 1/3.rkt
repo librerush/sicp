@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1.3 
 
 (define (sumnsquare a b)

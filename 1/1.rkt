@@ -1,3 +1,5 @@
+#lang racket
+
 ; ex 1
 
 10 ; 10
