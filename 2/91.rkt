@@ -5,6 +5,7 @@
 (require "support.rkt")
 (require "section-2-5-3.rkt")
 
+(provide div-terms)
 
 ;; from 2.88 exercise
 (define (negate t-lst)
@@ -55,4 +56,4 @@
                                    (car rest-of-result))
                       (cadr rest-of-result))))))))
 
-(div-poly a-poly b-poly)
+;; (div-poly a-poly b-poly)
