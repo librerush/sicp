@@ -6,6 +6,8 @@
 (require "support.rkt")
 (require "section-2-5-3.rkt")
 
+(provide greatest-common-divisor)
+
 
 (define (remainder-terms t1 t2)
   (cadr (div-terms t1 t2)))
@@ -32,4 +34,4 @@
 (define p1 (make-polynomial
             'x '((4 1) (3 -1) (2 -2) (1 2))))
 (define p2 (make-polynomial 'x '((3 1) (1 -1))))
-(greatest-common-divisor p1 p2)
+;; (greatest-common-divisor p1 p2)
