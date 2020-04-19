@@ -1,2 +1,2 @@
 # sicp
-My solutions
+
