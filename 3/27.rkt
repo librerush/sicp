@@ -1,5 +1,6 @@
 #lang sicp
 
+;; ex 3.27
 
 ;; memo-fib stores every Fibonacci number between 0..n in the table
 ;; so we can reuse previously computed values.
