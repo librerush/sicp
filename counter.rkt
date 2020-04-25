@@ -3,7 +3,7 @@
 
 ;; count a number of SICP exercises
 
-;; (define pattern #rx"^/[1-5]/([1-9]|[1-9][0-9]).(rkt|scm)$")
+; (define pattern #rx"^/[1-5]/([1-9]|[1-9][0-9]).(rkt|scm)$")
 (define pattern #rx"^([1-9]|[1-9][0-9]).(rkt|scm)$")
 
 ;; chapters
@@ -40,8 +40,8 @@
              (traverse-dirs (filter-dir dir))))))
 
 (define (main)
-  (let* ((dir ".")
-         (num-exer (count dir)))
+  (let* ([dir "."]
+         [num-exer (count dir)])
     (display "Done: ")
     (displayln num-exer)
     (display (* 100.0
