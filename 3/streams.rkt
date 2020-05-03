@@ -2,7 +2,9 @@
 
 (#%require racket/stream)
 
-(#%provide stream-car
+(#%provide add-streams
+           scale-stream
+           stream-car
 	   stream-cdr
 	   stream-enumerate-interval
 	   stream-ref
@@ -10,7 +12,8 @@
 	   stream-filter
 	   stream-map
 	   display-stream
-	   display-line)
+	   display-line
+	   integers)
 
 (define (stream-car stream)
   (car stream))
@@ -60,3 +63,13 @@
        (apply proc (map stream-car argstreams))
        (apply stream-map
 	      (cons proc (map stream-cdr argstreams))))))
+
+(define (scale-stream stream factor)
+  (stream-map (lambda (x) (* x factor)) stream))
+
+(define ones (cons-stream 1 ones))
+
+(define (add-streams s1 s2)
+  (stream-map + s1 s2))
+
+(define integers (cons-stream 1 (add-streams ones integers)))
