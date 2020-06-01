@@ -1,6 +1,7 @@
 #lang sicp
 
-(#%provide eval
+(#%provide apply-in-underlying-scheme
+           eval
            apply
            list-of-values
            eval-if
@@ -64,9 +65,23 @@
            extend-environment
            lookup-variable-value
            set-variable-value!
-           define-variable!)
+           define-variable!
+           setup-environment
+           the-global-environment
+           primitive-procedure?
+           primitive-implementation
+           primitive-procedures
+           primitive-procedure-names
+           primitive-procedure-objects
+           apply-primitive-procedure
+           input-prompt
+           output-prompt
+           driver-loop
+           prompt-for-input
+           announce-output
+           user-print)
 
-;; (define apply-in-underlying-scheme apply)
+(define apply-in-underlying-scheme apply)
 
 ;;;SECTION 4.1.1
 
@@ -81,7 +96,7 @@
          (make-procedure (lambda-parameters exp)
                          (lambda-body exp)
                          env))
-        ((begin? exp) 
+        ((begin? exp)
          (eval-sequence (begin-actions exp) env))
         ((cond? exp) (eval (cond->if exp) env))
         ((application? exp)
@@ -91,8 +106,8 @@
          (error "Unknown expression type -- EVAL" exp))))
 
 (define (apply procedure arguments)
-  (cond ;; ((primitive-procedure? procedure)
-        ;;  (apply-primitive-procedure procedure arguments))
+  (cond ((primitive-procedure? procedure)
+         (apply-primitive-procedure procedure arguments))
         ((compound-procedure? procedure)
          (eval-sequence
            (procedure-body procedure)
@@ -335,3 +350,70 @@
             (else (scan (cdr vars) (cdr vals)))))
     (scan (frame-variables frame)
           (frame-values frame))))
+
+;;;SECTION 4.1.4
+
+(define (setup-environment)
+  (let ((initial-env
+         (extend-environment (primitive-procedure-names)
+                             (primitive-procedure-objects)
+                             the-empty-environment)))
+    (define-variable! 'true true initial-env)
+    (define-variable! 'false false initial-env)
+    initial-env))
+
+(define the-global-environment (setup-environment))
+
+(define (primitive-procedure? proc)
+  (tagged-list? proc 'primitive))
+
+(define (primitive-implementation proc) (cadr proc))
+
+(define primitive-procedures
+  (list (list 'car car)
+        (list 'cdr cdr)
+        (list 'cons cons)
+        (list 'null? null?)
+;;      more primitives
+        ))
+
+(define (primitive-procedure-names)
+  (map car
+       primitive-procedures))
+
+(define (primitive-procedure-objects)
+  (map (lambda (proc) (list 'primitive (cadr proc)))
+       primitive-procedures))
+
+;[moved to start of file] (define apply-in-underlying-scheme apply)
+
+(define (apply-primitive-procedure proc args)
+  (apply-in-underlying-scheme
+   (primitive-implementation proc) args))
+
+
+
+(define input-prompt ";;; M-Eval input:")
+(define output-prompt ";;; M-Eval value:")
+
+(define (driver-loop)
+  (prompt-for-input input-prompt)
+  (let ((input (read)))
+    (let ((output (eval input the-global-environment)))
+      (announce-output output-prompt)
+      (user-print output)))
+  (driver-loop))
+
+(define (prompt-for-input string)
+  (newline) (newline) (display string) (newline))
+
+(define (announce-output string)
+  (newline) (display string) (newline))
+
+(define (user-print object)
+  (if (compound-procedure? object)
+      (display (list 'compound-procedure
+                     (procedure-parameters object)
+                     (procedure-body object)
+                     '<procedure-env>))
+      (display object)))
