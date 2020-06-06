@@ -2,14 +2,15 @@
 
 ;; ex 4.6
 
-(define (let->combination exp)
-  (make-application
-   (make-lambda
+(define (let->combination exp env)
+  (apply
+   (make-procedure
     (map car (car exp))
-    (cdr exp))
+    (cdr exp)
+    env)
    (map cadr (car exp))))
 
 (define (eval-let exp env)
-  (eval (let->combination (cdr exp)) env))
+  (let->combination (cdr exp) env))
 
 (define (let? exp) (tagged-list? exp 'let))
