@@ -18,7 +18,7 @@
   (goto (reg continue))
   base-case
   (assign val (const 1))
-  (goto (label continue))
+  (goto (reg continue))
   expt-done)
 
 ;; b. iterative
